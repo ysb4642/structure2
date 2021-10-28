@@ -20,20 +20,20 @@ void RadixSort(int arr[], int num, int maxLen)
 	// 가장 긴 데이터의 길이만큼 반복
 	for (pos = 0; pos < maxLen; pos++)
 	{
-		// 정렬 대상의 수만큼 반복
+		// 정렬 대상의 수만큼 반복 (정렬의대상의 수만큼 버킷에 데이터 삽입)
 		for (di = 0; di < num; di++)
 		{
 			// N번째 자리의 숫자 추출
 			radix = (arr[di] / divfac) % 10;
 
-			// 추출한 숫자를 근거로 버킷에 데이터 저장
+			// 추출한 숫자를 근거로 버킷에 데이터 저장 (버킷으로의 데이터 삽입 진행)
 			Enqueue(&buckets[radix], arr[di]);
 		}
 
-		// 버킷 수만큼 반복
+		// 버킷 수만큼 반복 (정렬대상의 수만큼 버킷으로부터 데이터 추출)
 		for (bi = 0, di = 0; bi < BUCKET_NUM; bi++)
 		{
-			// 버킷에 저장된 것 순서대로 다 꺼내서 다시 arr에 저장
+			// 버킷에 저장된 것 순서대로 다 꺼내서 다시 arr에 저장 (버킷으로부터의 데이터 추출 진행)
 			while (!QIsEmpty(&buckets[bi]))
 				arr[di++] = Dequeue(&buckets[bi]);
 		}
