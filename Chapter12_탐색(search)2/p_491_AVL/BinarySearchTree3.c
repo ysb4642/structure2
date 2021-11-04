@@ -14,7 +14,31 @@ BSTData BSTGetNodeData(BTreeNode *bst)
 	return GetData(bst);
 }
 
-void BSTInsert(BTreeNode **pRoot, BSTData data)
+BTreeNode *BSTInsert(BTreeNode **pRoot, BSTData data)
+{
+	if (*pRoot == NULL)
+	{
+		*pRoot = MakeBTreeNode();
+		SetData(*pRoot, data);
+	}
+	else if (data < GetData(*pRoot))
+	{
+		BSTInsert(&((*pRoot)->left), data);
+		*pRoot = Rebalance(pRoot);
+	}
+	else if (data > GetData(*pRoot))
+	{
+		BSTInsert(&((*pRoot)->right), data);
+		*pRoot = Rebalance(pRoot);
+	}
+	else
+	{
+		return NULL;		// 키의 중복을 허용하지 않는다.
+	}
+	return *pRoot;
+}
+
+/*void BSTInsert(BTreeNode **pRoot, BSTData data)
 {
 	BTreeNode *pNode = NULL;		// parent node
 	BTreeNode *cNode = *pRoot;		// current node
@@ -51,7 +75,7 @@ void BSTInsert(BTreeNode **pRoot, BSTData data)
 		*pRoot = nNode;
 	}
 	*pRoot = Rebalance(pRoot);		// 노드 추가 후 리밸런싱
-}
+}*/
 
 BTreeNode *BSTSearch(BTreeNode *bst, BSTData target)
 {

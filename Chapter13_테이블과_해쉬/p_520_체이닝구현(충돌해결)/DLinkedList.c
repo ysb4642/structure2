@@ -91,5 +91,5 @@ int LCount(List *plist)
 
 void SetSortRule(List *plist, int (*comp)(LData d1, LData d2))
 {
-	// 잠시 후에 소개하고 설명합니다.
+	plist->comp = comp;
 }
